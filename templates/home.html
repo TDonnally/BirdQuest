@@ -1,0 +1,63 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>BirdQuest</title>
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/bird.svg' %}" />
+    <link rel="stylesheet" href="{% static 'styles.css' %}"> 
+</head>
+<body>
+    <header class="contained">
+        <a href = "/">
+            <picture>
+                <source media="(min-width: 768px)" srcset="{% static 'images/Logo.svg' %}">
+                <img src="{% static 'images/bird.svg' %}" alt="BirdQuest Logo" />
+              </picture>
+        </a>
+        <nav class="nav">
+            <ul>
+                <li><a class="nav-button" href="/signup">Sign Up</a></li>
+                <li><a class="nav-button" href="/login">Sign In</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="section home-view contained">
+            <div class="photo-upload">
+                <div class = "photo-gallery">
+                </div>
+                <div class="image-placeholder">
+                    <img src="{% static 'images/binoculars.svg' %}" alt="Binoculars" />
+                    <h2>Upload an image to identify your bird</h2>
+                </div>
+                
+                <form method="POST" enctype="multipart/form-data" class="upload-image">
+                    {% csrf_token %}
+                    <label for="file-upload" class="custom-file-upload">
+                        Choose File
+                    </label>
+                    {{ form.image }}
+                    <span class="file-name">No file chosen</span>
+                </form>
+            </div>
+            <div class="leader-board">
+                <h2>See How Your Bird Watching Ranks!</h2>
+                <p>Sign up to gain access to global, regional, and local leaderboards.</p>
+                <p>Also, store a collection of all the birds you've spotted with detailed information about each species. </p>
+                <p>Track your progress, revisit your past sightings, and watch your collection grow as you explore new locations and discover new species.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 BirdQuest</p>
+    </footer>
+
+    <script src="{% static 'script.js' %}"></script> 
+</body>
+</html>

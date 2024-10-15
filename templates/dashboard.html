@@ -1,0 +1,85 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>BirdQuest</title>
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/bird.svg' %}?v=1.0" />
+    <link rel="stylesheet" href="{% static 'styles.css' %}"> 
+</head>
+<body>
+    <header class="contained">
+        <a href = "/">
+            <picture>
+                <source media="(min-width: 768px)" srcset="{% static 'images/Logo.svg' %}">
+                <img src="{% static 'images/bird.svg' %}" alt="BirdQuest Logo" />
+              </picture>
+        </a>
+        <nav class="nav">
+            <ul>
+                <li><a class="nav-button" href="/collection">collection</a></li>
+                <li><form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button class = "logout" type="submit">logout</button>
+                </form></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="section home-view contained">
+            <div class="photo-upload">
+                <div class = "photo-gallery">
+                </div>
+                <div class="image-placeholder">
+                    <img src="{% static 'images/binoculars.svg' %}" alt="Binoculars" />
+                    <h2>Upload an image to identify your bird</h2>
+                </div>
+                
+                <form method="POST" enctype="multipart/form-data" class="upload-image">
+                    {% csrf_token %}
+                    <label for="file-upload" class="custom-file-upload">
+                        Choose File
+                    </label>
+                    {{ form.image }}
+                    <span class="file-name">No file chosen</span>
+                </form>
+            </div>
+            <div class="leader-board">
+                <h2>Leaderboard</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Username</th>
+                            <th>Birds</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for entry in leaderboard_data %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>  
+                                <td>{{ entry.user.username }}</td>  
+                                <td>{{ entry.total_birds_found }}</td> 
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="3">No data available</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 BirdQuest</p>
+    </footer>
+
+    <script src="{% static 'script.js' %}"></script> 
+</body>
+</html>
